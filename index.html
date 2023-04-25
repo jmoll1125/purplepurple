@@ -7,7 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 #title {font-family: Consolas, slab-serif; font-size: 6vw; text-align: center;}
-p, button, span, label{font-family: Consolas, slab-serif; font-size: 18px;}
+p, button, span, label{font-family: Consolas, monospace, monospace; font-size: 18px;}
+button, label {color: black; margin-bottom: 10px;}
 h2 {font-family: Consolas, slab-serif; }
 </style>
 </head>
@@ -15,14 +16,18 @@ h2 {font-family: Consolas, slab-serif; }
 <h1 class="adapt" id="title">purplepurple</h1>
 <p id="time" class="adapt">Time: ??:??:??</p>
 <p class="adapt">The background color of this page will slowly change throughout the course of the day.</p>
+<span class="controls">
 <button id="sign" onclick="jump(this.id);">&plusmn;</button> 
 <button id="j1" onclick="jump(this.id);"></button> 
 <button id="j10" onclick="jump(this.id);"></button> 
 <button id="j60" onclick="jump(this.id);"></button> 
 <button id="reset" onclick="jump(this.id);">reset</button>
+<span style="white-space: nowrap;"> 
 <label for="speed" class="adapt">simulation speed: </label>
 <input type="range" min="1" max="10000" value="1" id="speed">
 <span class="adapt" id="disp">1&times;</span>
+</span>
+</span>
 <script>
 var sign = 1;
 var simspeed = 1;
