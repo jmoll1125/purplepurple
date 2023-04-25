@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- 2.28.23 and 4.24.23 -->
+<html>
+<head>
+<title>purplepurple</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+#title {font-family: Consolas, slab-serif; font-size: 6vw; text-align: center;}
+p, button, span, label{font-family: Consolas, slab-serif; font-size: 18px;}
+h2 {font-family: Consolas, slab-serif; }
+</style>
+</head>
+<body id="bg">
+<h1 class="adapt" id="title">purplepurple</h1>
+<p id="time" class="adapt">Time: ??:??:??</p>
+<p class="adapt">The background color of this page will slowly change throughout the course of the day.</p>
+<button id="sign" onclick="jump(this.id);">&plusmn;</button> 
+<button id="j1" onclick="jump(this.id);"></button> 
+<button id="j10" onclick="jump(this.id);"></button> 
+<button id="j60" onclick="jump(this.id);"></button> 
+<button id="reset" onclick="jump(this.id);">reset</button>
+<label for="speed" class="adapt">simulation speed: </label>
+<input type="range" min="1" max="10000" value="1" id="speed">
+<span class="adapt" id="disp">1&times;</span>
+<script>
+var sign = 1;
+var simspeed = 1;
+var timer = (Math.floor(Date.now() / 1000) - new Date().getTimezoneOffset()*60) % 86400;
+speed.oninput = function() {
+simspeed = document.getElementById("speed").value;
+document.getElementById("disp").innerHTML = simspeed.toString() + "&times;";
+};
+function changeColor(color) {
+  var cols = document.getElementsByClassName('adapt');
+  for(i = 0; i < cols.length; i++) {
+    cols[i].style.color = color;
+  }
+document.getElementById("speed").style.accentColor = color;
+}
+function update(time) {
+	timer += 0.1*simspeed*sign;
+	var hour = Math.floor((timer/86400 - Math.floor(timer/86400))*24).toString()
+	if (hour.length == 1) {
+		hour = "0" + hour;
+		};
+	var minute = Math.floor((((timer/86400 - Math.floor(timer/86400))*24)-Math.floor((timer/86400 - Math.floor(timer/86400))*24))*60).toString()
+		if (minute.length == 1) {
+		minute = "0" + minute;
+		};
+	var second = Math.floor(((((timer/86400 - Math.floor(timer/86400))*24)-Math.floor((timer/86400 - Math.floor(timer/86400))*24))*60-Math.floor((((timer/86400 - Math.floor(timer/86400))*24)-Math.floor((timer/86400 - Math.floor(timer/86400))*24))*60))*60).toString();;
+		if (second.length == 1) {
+		second = "0" + second;
+		};
+	document.getElementById("time").innerHTML = "Time: " + hour + ":" + minute + ":" + second;
+	if (parseInt(hour) >= 5 && parseInt(hour) <= 21) {
+			changeColor("black");
+		} else {
+			changeColor("white");
+			};
+	var r = (((Math.cos(((timer-28800)*3.1415926)/43200))+1)/2)*255;
+	var g = (((Math.cos(((timer-57600)*3.1415926)/43200))+1)/2)*255;
+	var b = (((Math.cos(((timer-0)*3.1415926)/43200))+1)/2)*255;
+	document.getElementById("bg").style.backgroundColor = "rgb("+r.toString()+", "+g.toString()+", "+b.toString()+")";
+	if (sign === 1) {
+		document.getElementById("j1").innerHTML = "plus 1 minute";
+		document.getElementById("j10").innerHTML = "plus 10 minutes";
+		document.getElementById("j60").innerHTML = "plus 1 hour";
+    } else {
+		document.getElementById("j1").innerHTML = "minus 1 minute";
+		document.getElementById("j10").innerHTML = "minus 10 minutes";
+		document.getElementById("j60").innerHTML = "minus 1 hour";
+		};
+		};
+setInterval(update, 100)
+function jump(distance) {
+if (distance == "sign") {
+	sign = sign * -1
+	};
+if (distance == "j1" || distance == "j10" || distance == "j60") {
+	timer += parseInt(distance.slice(1))*60*sign;
+	};
+if (distance == "reset") {
+	timer = (Math.floor(Date.now() / 1000) - new Date().getTimezoneOffset()*60) % 86400;
+	simspeed = 1;
+	document.getElementById("speed").value = 1;
+	document.getElementById("disp").innerHTML = simspeed.toString() + "&times;";
+	sign = 1;
+	};
+};
+</script>
+</body>
+</html>
